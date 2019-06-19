@@ -1,17 +1,29 @@
 pipeline {
     agent any
-    stages {	
+	tools {
+		maven 'maven'
+	}
+    stages {
+	 
+		stage ("Checkout") {
+			steps {
+				git branch: 'master',
+				url: 'https://github.com/vrer2/Sample_Project.git'
+			}
+		}
+		stage ('Test stage') {
+			steps {
+			sh 'mvn sonar:sonar'
+			}
+		}         	  
         stage ('Build Stage') {
             steps {
-			dir("/var/lib/jenkins/workspace/deploy/"){
 			sh 'mvn clean install'
-            }
             }
         }
 		stage ('Deployment Stage') {
             steps {
-                
-                    sh 'cp /var/lib/jenkins/workspace/deploy/target/*.war /opt/tomcat/apache-tomcat-8.5.37/webapps/'
+			sh 'cp target/*.war /opt/apache-tomcat-8.5.42/webapps/'
             }
         }
     }
