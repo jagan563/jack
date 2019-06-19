@@ -8,7 +8,7 @@ pipeline {
 		stage ("Checkout") {
 			steps {
 				git branch: 'master',
-				url: 'https://github.com/jagan563/Sample_Project.git'
+				url: 'https://github.com/jagan563/Sample_Project/jack.git'
 			}
 		}
 		stage ('Test stage') {
